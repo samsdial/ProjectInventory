@@ -1,5 +1,9 @@
 # Project FRONTEND finalized Tech
 
+# Rama MAIN front:
+
+/frontend
+
 ## Team
 
 ### Frontend
