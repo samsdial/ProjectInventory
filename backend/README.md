@@ -1,5 +1,9 @@
 # Project BACKEND finalized Tech
 
+## Team
+
+/backend
+
 ### Backend
 
 - Isabella S
