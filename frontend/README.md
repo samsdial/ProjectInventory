@@ -2,7 +2,7 @@
 
 # Rama MAIN front:
 
-/frontend
+[/frontend](https://github.com/samsdial/ProjectInventory/tree/FrontEnd/frontend)
 
 ## Team
 
