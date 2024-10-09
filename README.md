@@ -1,5 +1,11 @@
 # Proyect finalized Tech
 
+## Datos del proyecto
+
+## node v
+
+v20.10.0
+
 ## Team
 
 ### Backend
