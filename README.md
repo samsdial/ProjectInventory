@@ -1,4 +1,10 @@
-# Project finalized Tech
+# Project Requirements: Inventory Management System for an Engineering Company
+
+## Datos del proyecto
+
+## node v
+
+v20.10.0
 
 ## Team
 
@@ -9,10 +15,8 @@
 
 ### Frontend
 
-Edison C
-Jovany S
-
-# Project Requirements: Inventory Management System for an Engineering Company
+- Edison C
+- Jovany S
 
 ## 1. Project Description
 
