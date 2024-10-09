@@ -1,4 +1,4 @@
-# Proyect finalized Tech
+# Project finalized Tech
 
 ## Team
 
