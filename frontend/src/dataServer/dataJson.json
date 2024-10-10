@@ -1,0 +1,10 @@
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+  "user": {
+    "id": 12345,
+    "name": "wiliam",
+    "email": "wiliam@example.com",
+    "role": "admin"
+  },
+  "message": "Login successful"
+}

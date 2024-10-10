@@ -6,8 +6,8 @@ export const AuthRoutes: React.FC = () => {
     return (
         <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/Register" element={<RegisterPage />} />
-            <Route path="/*" element={<Navigate to={"/login"} />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/*" element={<Navigate to="/auth/login" />} />
         </Routes>
     );
 };

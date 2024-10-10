@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IAuthState } from "../../interfaces/auth";
 
 const initialState: IAuthState = {
-    isAutheticated: false,
+    isAuthenticated: localStorage.getItem("isAuthenticated") === "true",
 }
 
 const sliceAuthReducer = createSlice({
@@ -10,10 +10,16 @@ const sliceAuthReducer = createSlice({
     initialState,
     reducers: {
         login: (state) => {
-            state.isAutheticated = true;
+            
+            localStorage.setItem("isAuthenticated", "true");
+            state.isAuthenticated = true;
+            
         },
         logout: (state) => {
-            state.isAutheticated = false;
+            
+            localStorage.removeItem("isAuthenticated");
+            state.isAuthenticated = false;
+            
         }
     }
 });
