@@ -1,16 +1,29 @@
 import express from 'express';
-import exampleRoutes from './src/routes/exampleRoutes';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+import authRoutes from './src/routes/authentication';
+
+dotenv.config(); 
 
 const app = express();
-const port = 3000;
-
-// Middleware to parse JSON
 app.use(express.json());
 
-// Define API routes
-app.use('/api', exampleRoutes);
+console.log("MONGODB_URI:", process.env.MONGODB_URI);
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+// Connect to MongoDB
+console.log("Attempting to connect to MongoDB...");
+mongoose.connect(process.env.MONGODB_URI as string)
+    .then(() => console.log("Database connected"))
+    .catch(err => {
+        console.error("Could not connect to MongoDB", err);
+        process.exit(1); // Exit the application if the connection fails
+    });
+
+app.use('/auth', authRoutes);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
