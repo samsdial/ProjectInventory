@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
 
 import { connectDB } from '../db';
-import seedUsers from './users';   // Import user seeder
+
+import seedCategories from './categories';
+import seedUsers from './users';
+import seedProducts from './products';
+import seedTransactions from './transactions';
+import seedWarehouses from './warehouses';
 
 const runSeeders = async () => {
   try {
@@ -12,11 +17,18 @@ const runSeeders = async () => {
     console.log('Seeding users...');
     await seedUsers();
 
-    console.log('Seeding products...');
-    //await seedProducts();
+    console.log('Seeding categories...');
+    await seedCategories();
 
-    console.log('Seeding orders...');
-    //await seedOrders();
+    console.log('Seeding warehouses...\n');
+    await seedWarehouses();
+
+    console.log('Seeding products...');
+    await seedProducts();
+
+    console.log('Seeding transactions...');
+    await seedTransactions();
+
 
     console.log('All seeders ran successfully!');
   } catch (err) {
