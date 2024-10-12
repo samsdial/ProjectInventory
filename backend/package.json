@@ -13,18 +13,31 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.13",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^22.7.5",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "scripts": {
-    "start:dev": "npx nodemon",
+    "docker:build": "docker build -t backend .",
+    "docker:run": "docker run -p 3000:3000 backend",
+    "docker:dev": "docker run -p 3000:3000 -v $(pwd):/app backend",
+    "fix": "npx prettier --write .",
+    "build": "tsc",
     "start": "node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "npx ts-node src/seeders/index.ts"
+    "start:dev": "npx nodemon",
+    "seed": "npx ts-node src/seeders/index.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

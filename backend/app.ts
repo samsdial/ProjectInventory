@@ -1,7 +1,7 @@
-import express from 'express';
+import express from "express";
 
-import { connectDB } from './src/db';
-import authRoutes from './src/routes/authentication';
+import { connectDB } from "./src/db";
+import authRoutes from "./src/routes/authentication";
 import productRoutes from "./src/routes/productRoutes";
 
 const app = express();

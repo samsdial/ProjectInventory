@@ -1,6 +1,6 @@
 // import { Product } from "../models/Product";
 import { Request, Response } from "express";
-import Product from "../models/Product";
+import { Product } from "../models/Product";
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -12,16 +12,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 };
 
 export const createProduct = async (req: Request, res: Response) => {
-  const {
-    name,
-    description,
-    quantity,
-    stock_min,
-    stock_current,
-    category_id,
-    brand_id,
-    warehouse_id,
-  } = req.body;
+  const { name, description, quantity, stock_min, stock_current, category_id, brand_id, warehouse_id } = req.body;
   try {
     const newProduct = new Product({
       name,
@@ -42,16 +33,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const {
-    name,
-    description,
-    quantity,
-    stock_min,
-    stock_current,
-    category_id,
-    brand_id,
-    warehouse_id,
-  } = req.body;
+  const { name, description, quantity, stock_min, stock_current, category_id, brand_id, warehouse_id } = req.body;
 
   try {
     const updatedProduct = await Product.findOneAndUpdate(
@@ -66,7 +48,7 @@ export const updateProduct = async (req: Request, res: Response) => {
         brand_id,
         warehouse_id,
       },
-      { new: true }
+      { new: true },
     );
     if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });

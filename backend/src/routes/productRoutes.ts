@@ -1,11 +1,6 @@
 // productRoutes.ts
 import express from "express";
-import {
-  createProduct,
-  deleteProduct,
-  getAllProducts,
-  updateProduct,
-} from "../controllers/productController";
+import { createProduct, deleteProduct, getAllProducts, updateProduct } from "../controllers/productController";
 
 const router = express.Router();
 
