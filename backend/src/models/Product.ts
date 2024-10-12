@@ -9,7 +9,7 @@ export interface IProduct extends Document {
   category_id: mongoose.Types.ObjectId;
   brand_id: string;
   warehouse_id: mongoose.Types.ObjectId;
-  image? : string
+  image?: string;
 }
 
 const ProductSchema: Schema = new Schema(
@@ -19,12 +19,20 @@ const ProductSchema: Schema = new Schema(
     quantity: { type: Number, required: true },
     stock_min: { type: Number, required: true },
     stock_current: { type: Number, required: true },
-    category_id: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
+    category_id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Category",
+    },
     brand_id: { type: String, required: true },
-    warehouse_id: { type: Schema.Types.ObjectId, required: true, ref: 'Warehouse' },
-    image: {type: String, required: false}
+    warehouse_id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Warehouse",
+    },
+    image: { type: String, required: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Product = mongoose.model<IProduct>("Product", ProductSchema);

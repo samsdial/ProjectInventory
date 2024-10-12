@@ -17,7 +17,7 @@ const seedWarehouses = async () => {
       id_user: new mongoose.Types.ObjectId("60e9c5f4e8e7a4301c123457"),
     },
     {
-     _id: new mongoose.Types.ObjectId("65279b7f69f7b3c23ef9e0a7"),
+      _id: new mongoose.Types.ObjectId("65279b7f69f7b3c23ef9e0a7"),
       name: "Westside Storage",
       location: "456 West Ave, Springfield",
       id_user: new mongoose.Types.ObjectId("60e9c5f4e8e7a4301c123458"),
