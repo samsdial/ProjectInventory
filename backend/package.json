@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start:dev": "npx nodemon",
-    "start": "node app.ts",
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "npx ts-node src/seeders/index.ts"
   },
