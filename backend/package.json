@@ -29,7 +29,11 @@
     "testEnvironment": "node"
   },
   "scripts": {
+    "docker:build": "docker build -t backend .",
+    "docker:run": "docker run -p 3000:3000 backend",
+    "docker:dev": "docker run -p 3000:3000 -v $(pwd):/app backend",
     "fix": "npx prettier --write .",
+    "build": "tsc",
     "start": "node dist/app.js",
     "start:dev": "npx nodemon",
     "seed": "npx ts-node src/seeders/index.ts",
