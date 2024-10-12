@@ -11,13 +11,13 @@ const authenticationController = {
         try {
             const user = await User.findOne({ username });
             if (!user) {
-                res.status(403).json({ message: "User wasn't found" });
+                res.status(403).json(createResponse(null, "User wasn't found", false));
                 return;
             }
             
             const isMatch = await user.comparePassword(password);
             if (!isMatch) {
-                res.status(403).json({ message: "Wrong password" });
+                res.status(403).json(createResponse(null, "Wrong password", false));
                 return;
             }
 
@@ -36,9 +36,11 @@ const authenticationController = {
 
         } catch (error: unknown) {
             if (error instanceof Error) {
-                res.status(500).json({ error: error.message });
+                res.status(500).json(createResponse(null, error.message, false));
+                return;
             } else {
-                res.status(500).json({ error: 'Unexpected error occurred' });
+                res.status(500).json(createResponse(null, 'Unexpected error occurred', false));
+                return;
             }
         }
     },
