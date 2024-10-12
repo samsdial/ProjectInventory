@@ -24,3 +24,8 @@ export interface IAuthCredentials {
     email: string;
     password: string;
 }
+export interface IFormRegister {
+    userName: string;
+    email: string;
+    password: string;
+}
