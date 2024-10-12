@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
-import { User } from "../models/User";
 import jwt from "jsonwebtoken";
+
+import { User } from "../models/User";
+import { createResponse, loginResponse } from "../interfaces";
 
 const authenticationController = {
     userLogin: async (req: Request, res: Response): Promise<void> => {
@@ -20,7 +22,17 @@ const authenticationController = {
             }
 
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "defaultSecretKey", { expiresIn: "1h" });
-            res.status(200).json({ token });
+            const loginData: loginResponse = {
+                token: token,
+                user: {
+                    role: user.is_admin? 'admin': 'standard',
+                    email: user.email,
+                    id: user.id,
+                    name: user.name
+                }
+            };
+            
+            res.status(200).json(createResponse(loginData, 'Login successful', true));
 
         } catch (error: unknown) {
             if (error instanceof Error) {
