@@ -23,7 +23,8 @@ export const chartgenController = {
         query.product_id = product;
       }
 
-      const transactions = await Transaction.find(query).exec();
+      const transactions = await Transaction.find(query).populate("product_id", "name")
+      .exec();
 
       res.status(200).json(createResponse(transactions, "Historical transactions successfully retrieved", true));
     } catch (error: unknown) {
@@ -37,7 +38,7 @@ export const chartgenController = {
   getTopMovements: async (req: Request, res: Response): Promise<void> => {
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
+  
     try {
       const movements = await Transaction.aggregate([
         {
@@ -83,9 +84,24 @@ export const chartgenController = {
           $limit: 5, // Get the top 5 products
         },
         {
+          $lookup: {
+            from: "products",
+            localField: "_id",
+            foreignField: "_id",
+            as: "product_info",
+          },
+        },
+        {
+          $unwind: {
+            path: "$product_info",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
           $project: {
             _id: 0,
             product_id: "$_id",
+            product_name: "$product_info.name",
             in_total: 1,
             out_total: 1,
             total_moved: 1,
@@ -98,7 +114,7 @@ export const chartgenController = {
           },
         },
       ]);
-
+  
       res.status(200).json(createResponse(movements, "Top product movements successfully retrieved.", true));
     } catch (error: unknown) {
       if (error instanceof Error) {
