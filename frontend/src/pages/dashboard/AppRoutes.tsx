@@ -2,31 +2,63 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import { DashboardPage } from "./DashboardPage";
 import { ReportsPage } from "./ReportsPage";
-import { SideBar } from "../../components/SideBar";
+import { INavLink, SideBar } from "../../components/SideBar";
 import { Header } from "../../components/Header";
 import { ProductsPage } from "./ProductsPage";
 import { HistoryMovementsPage } from "./HistoryMovementsPage";
+import { Box, Grid } from "@mui/material";
+
+const items: INavLink[] = [
+    
+    { navItemText: "Products", to: "/home/products" },
+    { navItemText: "Reports", to: "/home/reports" },
+    { navItemText: "History of movements", to: "/home/history" },
+];
 
 export const AppRoutes: React.FC = () => {
     return (
-        <div className="grid grid-cols-[250px_1fr] grid-rows-[auto_1fr] h-screen fade-in">
-            <div className="h-screen">
-                <SideBar />
-            </div>
-            <main className="border-2 border-red-500 overflow-y-auto bg-gray-100 p-3 transition-all duration-300 ease-in-out mt-16">
-                <header className="col-span-2 row-span-1">
-                    <div className="fixed top-0 left-0 right-0">
-                        <Header />
-                    </div>
-                </header>
-                <Routes>
-                    <Route path="/" element={<DashboardPage />} />
-                    <Route path="/products" element={<ProductsPage />} />
-                    <Route path="/reports" element={<ReportsPage />} />
-                    <Route path="/history" element={<HistoryMovementsPage />} />
-                    <Route path="/*" element={<Navigate to="/home" />} />
-                </Routes>
-            </main>
-        </div>
+        <Grid container sx={{ height: "100vh", overflow: "hidden" }}>
+            {/* Sidebar */}
+            <Grid item sx={{ height: "100vh", flex: "0 0 250px" }}>
+                <SideBar items={items} />
+            </Grid>
+
+            {/* Main content */}
+            <Grid item sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                {/* Fixed header */}
+                <Box
+                    component="header"
+                    sx={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 1100,
+                        bgcolor: "background.paper",
+                        boxShadow: 1, // Para que destaque el header
+                    }}
+                >
+                    <Header />
+                </Box>
+
+                {/* Content area with scroll */}
+                <Box
+                    sx={{
+                        flex: 1,
+                        marginTop: "64px", // Ajuste para evitar que el contenido se superponga al header
+                        overflowY: "auto", // Permitir el scroll del contenido
+                        padding: 2,
+                    }}
+                >
+                    <Routes>
+                        <Route path="/" element={<DashboardPage />} />
+                        <Route path="/products" element={<ProductsPage />} />
+                        <Route path="/reports" element={<ReportsPage />} />
+                        <Route path="/history" element={<HistoryMovementsPage />} />
+                        <Route path="/*" element={<Navigate to="/home" />} />
+                    </Routes>
+                </Box>
+            </Grid>
+        </Grid>
     );
 };

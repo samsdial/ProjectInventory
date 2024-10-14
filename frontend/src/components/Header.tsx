@@ -1,9 +1,10 @@
 import React from "react";
-import { ButtonApp } from "./ButtonApp";
+
 import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { NavigateFunction, useNavigate } from "react-router";
 import { logout } from "../store/slice/sliceAuthReducer";
+import { Button } from "@mui/material";
 
 export const Header: React.FC = () => {
     const dispatch: Dispatch = useDispatch();
@@ -39,8 +40,9 @@ export const Header: React.FC = () => {
                     </svg>
                 </button>
                 <div className="w-10 h-10 rounded-full bg-gray-300"></div>
-                <ButtonApp color="bg-red-500" text="Logout" onClick={handleLogout} />
+                <Button color="error" variant="contained" onClick={handleLogout}>Logout</Button>
             </div>
         </header>
     );
 };
+
