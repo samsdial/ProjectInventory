@@ -1,48 +1,81 @@
-import React, { useState } from "react";
+import React from "react";
+import { Drawer, List, ListItem, ListItemText, Toolbar, Typography, Box, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useMediaQuery, useTheme } from "@mui/material";
 
-export const SideBar: React.FC = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(true);//Aun esta pendeinte la version responsiva!!!!!!!!!!!!!!!!!
+const drawerWidth = 240;
 
-    return (
-        <div className="">
-            <div
-                className={`fixed inset-y-0 left-0 w-64 bg-gray-800 text-white transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-                    } lg:translate-x-0 transition-transform duration-300 ease-in-out z-10`}
+export interface INavLink {
+  navItemText: string;
+  to: string;
+}
+
+interface SideBarProps {
+  items: INavLink[];
+}
+
+export const SideBar: React.FC<SideBarProps> = ({ items }) => {
+  const theme = useTheme(); // Obtener el tema actual
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Detectar pantallas pequeñas
+
+  return (
+    <>
+      {!isMobile && ( // Mostrar el SideBar solo en pantallas grandes
+        <Drawer
+          variant="permanent"
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+              background: "linear-gradient(to top right, #1E3A8A, #6B21A8)",
+              color: "#fff",
+            },
+          }}
+        >
+          <Toolbar>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                padding: 2,
+                borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-                <div className="flex gap-3 p-5 text-center text-2xl font-semibold border-b border-gray-700">
-                    <img src="" alt="logo" />
-                    <span>Inventory</span>
-                </div>
-                <nav className="mt-5">
-                    <div className="px-3">
-                        <Link
-                            to="/home"
-                            className="block rounded-lg px-4 py-2 mt-2 text-sm text-gray-200 hover:bg-gray-700"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            to="/home/products"
-                            className="block rounded-lg px-4 py-2 mt-2 text-sm text-gray-200 hover:bg-gray-700"
-                        >
-                            Products
-                        </Link>
-                        <Link
-                            to="/home/reports"
-                            className="block rounded-lg px-4 py-2 mt-2 text-sm text-gray-200 hover:bg-gray-700"
-                        >
-                            Reports
-                        </Link>
-                        <Link
-                            to="/home/history"
-                            className="block rounded-lg px-4 py-2 mt-2 text-sm text-gray-200 hover:bg-gray-700"
-                        >
-                            History of movements
-                        </Link>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    );
+              <img src="" alt="logo" style={{ height: "40px" }} />
+              <Typography variant="h6" component="div">
+                Inventory
+              </Typography>
+            </Box>
+          </Toolbar>
+          <Divider />
+          <List>
+            {items.map((item, index) => (
+              <ListItem
+                key={index}
+                component={Link}
+                to={item.to}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "#5C6BC0",
+                    color: "#ffffff",
+                  },
+                  color: "#C5CAE9",
+                  borderRadius: 1,
+                  width: "90%",
+                  margin: "0 auto",
+                }}
+              >
+                <ListItemText primary={item.navItemText} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+      )}
+    </>
+  );
 };

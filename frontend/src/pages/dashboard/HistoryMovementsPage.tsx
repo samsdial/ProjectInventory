@@ -1,7 +1,31 @@
 import React from "react";
+import { TableApp } from "../../components/TableApp";
+
+const columnTitles = [
+    "title1",
+    "title2",
+    "title3",
+    "title4",
+    "title5",
+    "title6",
+    "title7",
+    "title8",
+];
+
+const rowData = [
+    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
+    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
+    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
+    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
+    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
+    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
+    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],    
+];
 
 export const HistoryMovementsPage: React.FC = () => {
     return (
-        <h1 className="text-4xl fade-in">HistoryMovementsPage</h1>
+        <div className="fade-in">
+            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="History of movements" />
+        </div>
     );
 };

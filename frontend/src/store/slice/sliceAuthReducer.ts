@@ -1,25 +1,38 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IAuthState } from "../../interfaces/auth";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IAuthState, IUser } from "../../interfaces/auth";
 
-const initialState: IAuthState = {
-    isAuthenticated: localStorage.getItem("isAuthenticated") === "true",
-}
+const storedAuthData = localStorage.getItem("authData");
+const initialState: IAuthState = storedAuthData ? JSON.parse(storedAuthData)
+    : {
+        isAuthenticated: false,
+        data: {
+            token: "",
+            user: {
+                id: 0,
+                name: "",
+                email: "",
+                role: ""
+            }
+        }
+    };
 
 const sliceAuthReducer = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state) => {
-            
-            localStorage.setItem("isAuthenticated", "true");
+        login: (state, action: PayloadAction<IUser>) => {
+            const authData = {
+                isAuthenticated: true,
+                data: {
+                    ...action.payload,
+                }
+            };
+            localStorage.setItem("authData", JSON.stringify(authData));
             state.isAuthenticated = true;
-            
         },
         logout: (state) => {
-            
-            localStorage.removeItem("isAuthenticated");
+            localStorage.removeItem("authData");
             state.isAuthenticated = false;
-            
         }
     }
 });

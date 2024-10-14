@@ -1,8 +1,10 @@
 export interface IAuthState {
     isAuthenticated: boolean;
+    data: IUser;
 }
 
 export interface IUser {
+    token: string;
     id: number;
     name: string;
     email: string;
@@ -10,13 +12,12 @@ export interface IUser {
 }
 
 export interface IAuthResponse {
-    token: string;
-    user: IUser;
-    message: string;
+    error: IAuthError | null;
+    data: IUser | null
 }
 
 export interface IAuthError {
-    state: string;
+    status: number;
     message: string;
 }
 
