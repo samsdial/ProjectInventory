@@ -19,9 +19,7 @@ const validationSchema = Yup.object({
 
 export const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    
+    const navigate = useNavigate();    
 
     const formik = useFormik<IAuthCredentials>({
         initialValues: {

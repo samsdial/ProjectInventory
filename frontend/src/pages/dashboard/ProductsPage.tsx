@@ -25,7 +25,7 @@ const rowData = [
 export const ProductsPage: React.FC = () => {
     return (
         <div className="fade-in">
-            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="Products" />
+            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="Products" actions={true}/>
         </div>
     );
 };
