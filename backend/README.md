@@ -7,10 +7,12 @@
 ## Team
 
 ### Backend
+
 - Isabella S
 - Sergio M
 
 ### Frontend
+
 - Edison C
 - Jovany S
 
