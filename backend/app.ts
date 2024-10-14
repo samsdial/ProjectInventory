@@ -4,7 +4,7 @@ import { connectDB } from "./src/db";
 import authRoutes from "./src/routes/authentication";
 import productRoutes from "./src/routes/productRoutes";
 
-const app = express();
+export const app = express();
 app.use(express.json());
 connectDB();
 
