@@ -44,8 +44,41 @@ export const authenticationController = {
     }
   },
 
-  register: (req: Request, res: Response): void => {
-    res.json({ message: "User registered successfully" });
+  register: async (req: Request, res: Response): Promise<void> => {
+    const { email, name, password, username } = req.body;
+
+    try {
+      const user = await User.exists({
+        $or: [{ username }, { email }],
+      });
+
+      if (user) {
+        res.status(400).json(createResponse(null, "An user with this email or username already exists", false));
+        return;
+      }
+      const newUser = new User({ email, name, password, username });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, "secretKey", { expiresIn: "1h" });
+      const userInfo: loginResponse = {
+        token: token,
+        user: {
+          role: newUser.is_admin ? "admin" : "standard",
+          email: newUser.email,
+          id: newUser.id,
+          name: newUser.name,
+        },
+      };
+
+      res.status(201).json(createResponse(userInfo, "User account successfully created", true));
+      return;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json(createResponse(null, error.message, false));
+        return;
+      }
+      res.status(500).json(createResponse(null, "Unexpected error occurred", false));
+      return;
+    }
   },
 };
 
