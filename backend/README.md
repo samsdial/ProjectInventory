@@ -19,5 +19,7 @@
 To run the project, follow these steps:
 
 **Build the application and start the application using Docker:**
-   ```bash
-    docker-compose up
+
+```bash
+ docker-compose up
+```
