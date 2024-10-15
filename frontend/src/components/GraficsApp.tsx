@@ -1,68 +1,72 @@
-import { createChart } from "lightweight-charts";
-import React, { useEffect, useRef } from "react";
+// src/components/GraficsApp.tsx
+import React from "react"; // Aquí también importas React
+import { ResponsivePie } from "@nivo/pie";
 
-export const GraficsApp: React.FC<{ data: any, nameGrafic: string }> = ({ data, nameGrafic }) => {
-    const chartContainerRef = useRef(null);
+interface PieData {
+    id: string;
+    label: string;
+    value: number;
+    color: string;
+}
 
-    useEffect(() => {
-        // Crear el gráfico dentro del contenedor
-        const chart = createChart(chartContainerRef.current!, {
-            width: 800,
-            height: 400,
-            layout: {
-                background: {
-                    color: '#f5f5f5', // Ajusta el color de fondo de manera correcta
-                },
-                textColor: '#333', // Color de texto para mejorar la legibilidad
-            },
-            grid: {
-                vertLines: {
-                    color: '#d3d3d3', // Color gris suave para las líneas verticales
-                    style: 1, // Línea sólida
-                },
-                horzLines: {
-                    color: '#e0e0e0', // Mantiene las líneas horizontales en gris claro
-                    style: 0, // Línea sólida
-                },
-            },
-            crosshair: {
-                mode: 0,
-                vertLine: {
-                    color: '#6c6c6c',
-                    width: 1,
-                    style: 1, // Línea sólida
-                },
-                horzLine: {
-                    color: '#6c6c6c',
-                    width: 1,
-                    style: 1, // Línea sólida
-                },
-            },
-            overlayPriceScales: {
-                borderColor: '#cccccc', // Color de borde para la escala de precios
-            },
-            timeScale: {
-                borderColor: '#cccccc', // Color de borde para la escala de tiempo
-            },
-        });
+interface GraficsAppProps {
+    data: PieData[];
+}
 
-        const lineSeries = chart.addLineSeries({
-            color: '#2962FF', // Un azul atractivo para la línea del gráfico
-            lineWidth: 2, // Grosor de la línea
-            crosshairMarkerVisible: true, // Mostrar marcador al interactuar
-            crosshairMarkerRadius: 4,
-            crosshairMarkerBackgroundColor: '#FF4081', // Color de marcador interactivo
-        });
+const MyResponsivePie: React.FC<{ data: PieData[] }> = ({ data }) => (
+    <ResponsivePie
+        data={data}
+        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+        innerRadius={0.5}
+        padAngle={0.7}
+        cornerRadius={3}
+        activeOuterRadiusOffset={8}
+        borderWidth={1}
+        borderColor={{
+            from: "color",
+            modifiers: [["darker", 0.2]],
+        }}
+        arcLinkLabelsSkipAngle={10}
+        arcLinkLabelsTextColor="#333333"
+        arcLinkLabelsThickness={2}
+        arcLinkLabelsColor={{ from: "color" }}
+        arcLabelsSkipAngle={10}
+        arcLabelsTextColor={{
+            from: "color",
+            modifiers: [["darker", 2]],
+        }}
+        legends={[
+            {
+                anchor: "bottom",
+                direction: "row",
+                justify: false,
+                translateX: 0,
+                translateY: 56,
+                itemsSpacing: 0,
+                itemWidth: 100,
+                itemHeight: 18,
+                itemTextColor: "#999",
+                itemDirection: "left-to-right",
+                itemOpacity: 1,
+                symbolSize: 18,
+                symbolShape: "circle",
+                effects: [
+                    {
+                        on: "hover",
+                        style: {
+                            itemTextColor: "#000",
+                        },
+                    },
+                ],
+            },
+        ]}
+    />
+);
 
-        // Cargar los datos en el gráfico
-        lineSeries.setData(data);
-
-        return () => chart.remove();
-    }, [data]);
+export const GraficsApp: React.FC<GraficsAppProps> = ({ data }) => {
     return (
-        <div>
-            <h2>{nameGrafic}</h2>
-            <div ref={chartContainerRef} />
+        <div style={{ height: "400px" }}>
+            <MyResponsivePie data={data} />
         </div>
     );
 };
