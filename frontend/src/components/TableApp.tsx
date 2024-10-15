@@ -11,35 +11,34 @@ import {
     Button,
     Modal,
     Box,
+    TextField,
 } from "@mui/material";
+import { ModalForms } from "./ModalForms";
+import { FormProduct } from "./FormProduct";
+import { updateProduct } from "../api/products/updateProduct";
+
 
 export interface TableAppProps {
     columnTitles: string[];
     rowData: (string | number)[][];
-    nameTable?: string;
+    nameTable: string;
+    actions?: Boolean;
 }
-
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
 
 export const TableApp: React.FC<TableAppProps> = ({
     columnTitles,
     rowData,
     nameTable,
+    actions,
 }) => {
-    const [openModal, setOpenModal] = useState<{ open: boolean; rowIndex: number | null }>({ open: false, rowIndex: null });
+    const [openModal, setOpenModal] = useState<{ open: boolean; rowIndex: number | null }>({ open: false, rowIndex: 2 });
 
     const handleOpenModal = (rowIndex: number) => setOpenModal({ open: true, rowIndex });
-    const handleCloseModal = () => setOpenModal({ open: false, rowIndex: null });
+    const handleCloseModal = () => {
+        setOpenModal({ open: false, rowIndex: null });
+        updateProduct();
+        //Pendiente Crear modal de Actualizando producto y despues producto Actualizado con exito...    
+    }
 
     return (
         <TableContainer component={Paper} sx={{ marginTop: 2 }}>
@@ -54,7 +53,9 @@ export const TableApp: React.FC<TableAppProps> = ({
                         {columnTitles.map((title, index) => (
                             <TableCell key={index}>{title}</TableCell>
                         ))}
-                        <TableCell>Acciones</TableCell> {/* Columna para los botones */}
+                        {
+                            actions && <TableCell>Acciones</TableCell>
+                        }
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -71,35 +72,30 @@ export const TableApp: React.FC<TableAppProps> = ({
                             {row.map((cell, cellIndex) => (
                                 <TableCell key={cellIndex}>{cell}</TableCell>
                             ))}
-                            <TableCell>
-                                <Button variant="contained" color="primary" onClick={() => handleOpenModal(rowIndex)}>
-                                    Acción 1
-                                </Button>
-                                <Button variant="contained" color="secondary" sx={{ marginLeft: 1 }} onClick={() => handleOpenModal(rowIndex)}>
-                                    Acción 2
-                                </Button>
-                            </TableCell>
+                            {
+                                actions && <TableCell>
+                                    <Button variant="contained" color="primary" onClick={() => handleOpenModal(rowIndex)}>
+                                        Acción 1
+                                    </Button>
+                                    <Button variant="contained" color="secondary" sx={{ marginLeft: 1 }} onClick={() => handleOpenModal(rowIndex)}>
+                                        Acción 2
+                                    </Button>
+                                </TableCell>
+                            }
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
 
-            {/* Modales */}
-            <Modal
+            <ModalForms
                 open={openModal.open}
                 onClose={handleCloseModal}
-                aria-labelledby="modal-title"
-                aria-describedby="modal-description"
+                title="Modal de Acción"
+                description={`Modal ${openModal.rowIndex !== null ? openModal.rowIndex + 1 : ''}.`}
             >
-                <Box sx={style}>
-                    <Typography id="modal-title" variant="h6" component="h2">
-                        Modal de Acción
-                    </Typography>
-                    <Typography id="modal-description" sx={{ mt: 2 }}>
-                        Aquí puedes añadir contenido para la acción de la fila {openModal.rowIndex !== null ? openModal.rowIndex + 1 : ''}.
-                    </Typography>
-                </Box>
-            </Modal>
+                <FormProduct onSubmit={handleCloseModal} />
+            </ModalForms>
+
         </TableContainer>
     );
 };

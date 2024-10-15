@@ -9,7 +9,7 @@ import { HistoryMovementsPage } from "./HistoryMovementsPage";
 import { Box, Grid } from "@mui/material";
 
 const items: INavLink[] = [
-    
+
     { navItemText: "Products", to: "/home/products" },
     { navItemText: "Reports", to: "/home/reports" },
     { navItemText: "History of movements", to: "/home/history" },
@@ -18,14 +18,14 @@ const items: INavLink[] = [
 export const AppRoutes: React.FC = () => {
     return (
         <Grid container sx={{ height: "100vh", overflow: "hidden" }}>
-            {/* Sidebar */}
+
             <Grid item sx={{ height: "100vh", flex: "0 0 250px" }}>
                 <SideBar items={items} />
             </Grid>
 
-            {/* Main content */}
+
             <Grid item sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                {/* Fixed header */}
+
                 <Box
                     component="header"
                     sx={{
@@ -35,18 +35,18 @@ export const AppRoutes: React.FC = () => {
                         right: 0,
                         zIndex: 1100,
                         bgcolor: "background.paper",
-                        boxShadow: 1, // Para que destaque el header
+                        boxShadow: 1,
                     }}
                 >
                     <Header />
                 </Box>
 
-                {/* Content area with scroll */}
+
                 <Box
                     sx={{
                         flex: 1,
-                        marginTop: "64px", // Ajuste para evitar que el contenido se superponga al header
-                        overflowY: "auto", // Permitir el scroll del contenido
+                        marginTop: "64px",
+                        overflowY: "auto",
                         padding: 2,
                     }}
                 >

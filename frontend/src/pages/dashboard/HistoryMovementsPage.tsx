@@ -10,6 +10,7 @@ const columnTitles = [
     "title6",
     "title7",
     "title8",
+    "title9",
 ];
 
 const rowData = [
@@ -25,7 +26,7 @@ const rowData = [
 export const HistoryMovementsPage: React.FC = () => {
     return (
         <div className="fade-in">
-            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="History of movements" />
+            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="History of movements" actions={false} />
         </div>
     );
 };
