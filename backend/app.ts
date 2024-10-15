@@ -6,7 +6,7 @@ import productRoutes from "./src/routes/productRoutes";
 import chartRoutes from "./src/routes/chartRoutes";
 import authMiddleware from "./src/middlewares/authenticationMiddleware";
 
-const app = express();
+export const app = express();
 app.use(express.json());
 connectDB();
 
