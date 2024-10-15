@@ -24,14 +24,14 @@ export const MainRouter: React.FC = () => {
             } />
 
             {/*Rutas privadas*/}
-            <Route path="/home/*" element={
+            <Route path="/dashboard/*" element={
                 <PrivateRoute>
                     <AppRoutes />
                 </PrivateRoute>
             } />
 
             {/*Redirecciona a rutas base segun estado de autenticacion*/}
-            <Route path="/*" element={<Navigate to={isAuthenticated ? "/home/dashboard" : "/auth/login"} />} />
+            <Route path="/*" element={<Navigate to={isAuthenticated ? "/dashboard/products" : "/auth/login"} />} />
         </Routes>
     );
 };

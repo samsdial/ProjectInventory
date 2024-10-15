@@ -1,3 +1,3 @@
-export const createProduct = (): void => {
-    console.log("Prodcto CREADO con exito!!!");
+export const deleteProduct = (): void => {
+    console.log("Prodcto ELIMINADO con exito!!!");
 }

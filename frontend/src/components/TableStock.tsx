@@ -22,7 +22,7 @@ export interface TableAppProps {
     onAdd?: () => void;
 }
 
-export const TableApp: React.FC<TableAppProps> = ({
+export const TableStock: React.FC<TableAppProps> = ({
     columnTitles,
     rowData,
     nameTable,
@@ -36,16 +36,6 @@ export const TableApp: React.FC<TableAppProps> = ({
             <Typography variant="h6" component="div" sx={{ marginTop: 2, marginLeft: 2 }}>
                 {nameTable}
             </Typography>
-            {actions && (
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onAdd}
-                    sx={{ marginTop: 1, marginLeft: 2 }}
-                >
-                    Add Product
-                </Button>
-            )}
             <Table sx={{ minWidth: 650, width: '100%' }}>
                 <TableHead>
                     <TableRow>
@@ -63,16 +53,14 @@ export const TableApp: React.FC<TableAppProps> = ({
                                 <img src={row.imageUrl} alt={row.name} style={{ maxWidth: "50px", maxHeight: "50px" }} />
                             </TableCell>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.description}</TableCell>
                             <TableCell>{row.stock}</TableCell>
-                            <TableCell>{row.category}</TableCell>
                             {actions && (
                                 <TableCell>
                                     <Button variant="contained" color="primary" onClick={() => onEdit && onEdit(row)}>
-                                        Edit
+                                        Add
                                     </Button>
                                     <Button variant="contained" color="secondary" sx={{ marginLeft: 1 }} onClick={() => onDelete && onDelete(row)}>
-                                        Delete
+                                        Remove
                                     </Button>
                                 </TableCell>
                             )}

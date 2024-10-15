@@ -16,6 +16,7 @@ export interface IAuthResponse {
     data: IUser | null
 }
 
+
 export interface IAuthError {
     status: number;
     message: string;

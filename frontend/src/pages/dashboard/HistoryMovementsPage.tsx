@@ -1,32 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TableApp } from "../../components/TableApp";
+import { IProduct } from "../../interfaces/product";
+import { getProducts } from "../../api/products/getProducts";
+import { IsLoading } from "../../components/IsLoading";
 
 const columnTitles = [
-    "title1",
-    "title2",
-    "title3",
-    "title4",
-    "title5",
-    "title6",
-    "title7",
-    "title8",
-    "title9",
+    "id",
+    "name",
+    "description",
+    "stock",
+    "category",
+    "imgurl",
 ];
 
-const rowData = [
-    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
-    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
-    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
-    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
-    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
-    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],
-    ["row1", 159, 6.0, 24, 4.0, 1.333, 1.333, 1.333, 1.333],    
-];
 
 export const HistoryMovementsPage: React.FC = () => {
+    const [rowData, setRowData] = useState<IProduct[]>([]);
+    const [isloading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await getProducts();
+                if (response.error) {
+                    throw new Error(response.error.message);
+                }
+                setRowData(response.data || []);
+            } catch (err: any) {
+                
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    if (isloading) {
+        return <IsLoading message="Loading products..." />
+    }
+
     return (
         <div className="fade-in">
-            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="History of movements" actions={false} />
+            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="History of movements" />
         </div>
     );
 };
