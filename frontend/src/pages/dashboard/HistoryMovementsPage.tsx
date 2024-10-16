@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { TableApp } from "../../components/TableApp";
-import { IProduct } from "../../interfaces/product";
-import { getProducts } from "../../api/products/getProducts";
+import { ITransaction } from "../../interfaces/product";
+import { getTransactions } from "../../api/products/getProducts";
 import { IsLoading } from "../../components/IsLoading";
+import { TableTransaction } from "../../components/TableTransaction";
 
 const columnTitles = [
-    "id",
-    "name",
+    "product",
+    "user",
     "description",
-    "stock",
-    "category",
-    "imgurl",
+    "movement type",
+    "quantity moved",
+    "date",
 ];
 
 
 export const HistoryMovementsPage: React.FC = () => {
-    const [rowData, setRowData] = useState<IProduct[]>([]);
+    const [rowData, setRowData] = useState<ITransaction[]>([]);
     const [isloading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await getProducts();
+                const response = await getTransactions();
                 if (response.error) {
                     throw new Error(response.error.message);
                 }
@@ -42,7 +43,7 @@ export const HistoryMovementsPage: React.FC = () => {
 
     return (
         <div className="fade-in">
-            <TableApp columnTitles={columnTitles} rowData={rowData} nameTable="History of movements" />
+            <TableTransaction columnTitles={columnTitles} rowData={rowData} nameTable="History of movements" />
         </div>
     );
 };
