@@ -9,6 +9,9 @@ import {
     Paper,
     Typography,
     Button,
+    Box,
+    FormControlLabel,
+    Checkbox,
 } from "@mui/material";
 import { IProduct } from "../interfaces/product";
 
@@ -33,19 +36,50 @@ export const TableApp: React.FC<TableAppProps> = ({
 }) => {
     return (
         <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+
+
             <Typography variant="h6" component="div" sx={{ marginTop: 2, marginLeft: 2 }}>
                 {nameTable}
             </Typography>
-            {actions && (
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onAdd}
-                    sx={{ marginTop: 1, marginLeft: 2 }}
-                >
-                    Add Product
-                </Button>
-            )}
+            <Box
+                display="flex"
+                alignItems="center"
+            >
+                {/* Add Product Button */}
+                {actions && (
+                    <Box pr={5} mb={1}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onAdd}
+                            sx={{ marginTop: 1 }}
+                        >
+                            Add Product
+                        </Button>
+                    </Box>
+                )}
+
+                {/* Ordenar por label */}
+                <Box pr={3}>
+                    <Typography variant="body1">Ordenar por:</Typography>
+                </Box>
+
+                {/* Checkbox for Category Sorting */}
+                <Box display="flex" alignItems="center" justifyContent="center">
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                //onChange={(e) => sortProductsByCategory(e.target.checked)}
+                                color="primary"
+                            />
+                        }
+                        label="Categoría"
+                    />
+                </Box>
+            </Box>
+
+
+
             <Table sx={{ minWidth: 650, width: '100%' }}>
                 <TableHead>
                     <TableRow>

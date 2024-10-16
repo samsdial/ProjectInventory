@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import { IAuthCredentials, IAuthError, IAuthResponse } from "../interfaces";
-import { combineSlices } from "@reduxjs/toolkit";
 
 const urlEndpoint: string = "https://apimocha.com/sigindioy/login";
 

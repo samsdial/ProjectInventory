@@ -37,6 +37,19 @@ export const ProductsPage: React.FC = () => {
 
     const [confirmUpdateModalOpen, setConfirmUpdateModalOpen] = useState<boolean>(false);// Modal actualizar
 
+    //Order Products for Category
+    const sortProductsByCategory = (isChecked: boolean) => {
+        if (!isChecked) return; 
+
+        const sortedData = [...rowData].sort((a, b) => {
+            return isSortedAsc
+                ? a.category.localeCompare(b.category)
+                : b.category.localeCompare(a.category);
+        });
+
+        setRowData(sortedData);
+        setIsSortedAsc(!isSortedAsc);
+    };
 
     useEffect(() => {
         const fetchProducts = async () => {
