@@ -9,6 +9,9 @@ import {
     Paper,
     Typography,
     Button,
+    Box,
+    FormControlLabel,
+    Checkbox,
 } from "@mui/material";
 import { IProduct } from "../interfaces/product";
 
@@ -20,6 +23,8 @@ export interface TableAppProps {
     onEdit?: (product: IProduct) => void;
     onDelete?: (product: IProduct) => void;
     onAdd?: () => void;
+    onCheckBox?: (isChecked: boolean) => void;
+    onCheckBoxStock?: (isChecked: boolean) => void;
 }
 
 export const TableApp: React.FC<TableAppProps> = ({
@@ -30,22 +35,61 @@ export const TableApp: React.FC<TableAppProps> = ({
     onEdit,
     onDelete,
     onAdd,
+    onCheckBox,
+    onCheckBoxStock,
 }) => {
     return (
         <TableContainer component={Paper} sx={{ marginTop: 2 }}>
             <Typography variant="h6" component="div" sx={{ marginTop: 2, marginLeft: 2 }}>
                 {nameTable}
             </Typography>
-            {actions && (
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onAdd}
-                    sx={{ marginTop: 1, marginLeft: 2 }}
-                >
-                    Add Product
-                </Button>
-            )}
+            <Box
+                display="flex"
+                alignItems="center"
+            >
+                
+                {actions && (
+                    <Box pr={5} mb={1}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onAdd}
+                            sx={{ marginTop: 1 }}
+                        >
+                            Add Product
+                        </Button>
+                    </Box>
+                )}
+
+                
+                <Box pr={3}>
+                    <Typography variant="body1">Sort by:</Typography>
+                </Box>
+
+                
+                <Box display="flex" alignItems="center" justifyContent="center">
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                onChange={(e) => onCheckBox && onCheckBox(e.target.checked)}
+                                color="primary"
+                            />
+                        }
+                        label="Category"
+                    />
+                </Box>
+                <Box display="flex" alignItems="center" justifyContent="center">
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                onChange={(e) => onCheckBoxStock && onCheckBoxStock(e.target.checked)}
+                                color="primary"
+                            />
+                        }
+                        label="Low stock"
+                    />
+                </Box>
+            </Box>
             <Table sx={{ minWidth: 650, width: '100%' }}>
                 <TableHead>
                     <TableRow>

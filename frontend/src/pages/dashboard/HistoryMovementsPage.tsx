@@ -37,7 +37,7 @@ export const HistoryMovementsPage: React.FC = () => {
     }, []);
 
     if (isloading) {
-        return <IsLoading message="Loading products..." />
+        return <IsLoading message="Loading..." />
     }
 
     return (

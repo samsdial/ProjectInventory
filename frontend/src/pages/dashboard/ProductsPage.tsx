@@ -5,6 +5,7 @@ import { getProducts } from "../../api/products/getProducts";
 import { ModalForms } from "../../components/ModalForms";
 import { FormProduct } from "../../components/FormProduct";
 import { CustomModal } from "../../components/CustomModal";
+import { IsLoading } from "../../components/IsLoading";
 
 const columnTitles = [
     "id",
@@ -15,6 +16,41 @@ const columnTitles = [
     "imgurl",
 ];
 
+const res = {
+    error: null,
+    data: [
+        {
+            id: '2',
+            name: 'Product Two',
+            description: 'Description for product two.',
+            stock_current: 50,
+            category_id: { name: 'Category B', _id: 'cat-2' },
+            image: 'https://example.com/images/product2.jpg',
+            warehouse_id: { name: 'Warehouse 2' },
+            brand_id: 'brand-2',
+            createdAt: '2024-10-15T12:00:00Z',
+            quantity: 5,
+            stock_min: '3',
+        },
+        {
+            id: '1',
+            name: 'Product One',
+            description: 'Description for product one.',
+            stock_current: 100,
+            category_id: { name: 'Category A', _id: 'cat-1' },
+            image: 'https://example.com/images/product1.jpg',
+            warehouse_id: { name: 'Warehouse 1' },
+            brand_id: 'brand-1',
+            createdAt: '2024-10-15T12:00:00Z',
+            quantity: 10,
+            stock_min: '5',
+        }
+
+    ]
+}
+
+
+
 export const ProductsPage: React.FC = () => {
     const [rowData, setRowData] = useState<IProduct[]>([]);
     //Definimos estados de los modales
@@ -23,7 +59,7 @@ export const ProductsPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);// Porceso de carga inicial identifica error
 
     const [openModalForm, setOpenModalForm] = useState<boolean>(false);//1. Controla el modal con el formularios
-    
+
     const [confirmCreateModalOpen, setConfirmCreateModalOpen] = useState<boolean>(false); //2. Modal Confirmar la creacion del producto
     const [modalMessage, setModalMessage] = useState<string>(""); // Mensaje para cualquier accion en proceso
 
@@ -37,6 +73,10 @@ export const ProductsPage: React.FC = () => {
 
     const [confirmUpdateModalOpen, setConfirmUpdateModalOpen] = useState<boolean>(false);// Modal actualizar
 
+    const [originalData, setOriginalData] = useState<IProduct[]>([]);
+
+
+
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -46,8 +86,11 @@ export const ProductsPage: React.FC = () => {
                     throw new Error(response.error.message);
                 }
                 setRowData(response.data || []);
+                setOriginalData(response.data || [])
+                // setRowData(res.data)
+                // setOriginalData(res.data)
             } catch (err: any) {
-                setError(err.message || "Error al obtener productos");
+                setError(err.message || "Error getting products");
             } finally {
                 setIsLoading(false);
             }
@@ -56,6 +99,27 @@ export const ProductsPage: React.FC = () => {
         fetchProducts();
     }, []);
 
+    const sortProductsByStock = (isChecked: boolean) => {
+        if (isChecked) {
+            const sortedData = [...rowData].sort((a, b) => {
+                return a.stock_current - b.stock_current;
+            });
+            setRowData(sortedData);
+        } else {
+            setRowData(originalData);
+        }
+    };
+
+    const sortProductsByCategory = (isChecked: boolean) => {
+        if (isChecked) {
+            const sortedData = [...rowData].sort((a, b) => {
+                return a.category_id.name.localeCompare(b.category_id.name);
+            });
+            setRowData(sortedData);
+        } else {
+            setRowData(originalData);
+        }
+    };
 
     const handleDeleteProduct = (product: IProduct) => {
         setSelectedProduct(product);
@@ -65,17 +129,17 @@ export const ProductsPage: React.FC = () => {
     const confirmDelete = async () => {
         try {
             setConfirmDeleteModalOpen(false);
-            setModalMessage("Eliminando producto...");
+            setModalMessage("Removing product...");
             setLoadingModalOpen(true);
             await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula la eliminacion
             setRowData((prev) => prev.filter((p) => p.id !== selectedProduct?.id));
             setSelectedProduct(null);
             setLoadingModalOpen(false);
         } catch (error) {
-            setModalMessage("Error al intentar eliminar el producto."); // Mensaje de éxito
+            setModalMessage("Error when trying to delete the product."); // Mensaje de éxito
             setModalFinallyActionOpen(true);
         } finally {
-            setModalMessage("Producto eliminado con éxito."); // Mensaje de éxito
+            setModalMessage("Product successfully removed."); // Mensaje de éxito
             setModalFinallyActionOpen(true);
 
         }
@@ -91,7 +155,7 @@ export const ProductsPage: React.FC = () => {
             setOpenModalForm(false) //Cierra modal con formulario
             setConfirmUpdateModalOpen(false); // cierra el modal con botones para confirmar
 
-            setModalMessage("Actualizando producto...");
+            setModalMessage("Updating product...");
             setLoadingModalOpen(true);
 
             await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula la creación
@@ -100,10 +164,10 @@ export const ProductsPage: React.FC = () => {
             setLoadingModalOpen(false); // Cierra modal que esta a la espera de la creacion del producto
 
         } catch (error) {
-            setModalMessage("Error al actualizar el producto.");
+            setModalMessage("Error updating product.");
             setModalFinallyActionOpen(true); // abre modal de exito o error
         } finally {
-            setModalMessage("Producto actualizado con exitó..."); // crea mensjae para modal 
+            setModalMessage("Product updated successfully..."); // crea mensjae para modal 
             setModalFinallyActionOpen(true); // abre modal de exito o error
         }
     };
@@ -117,7 +181,7 @@ export const ProductsPage: React.FC = () => {
             setOpenModalForm(false) //Cierra modal con formulario
             setConfirmCreateModalOpen(false); // cierra el modal con botones para confirmar
 
-            setModalMessage("Creando producto...");
+            setModalMessage("Creating product...");
             setLoadingModalOpen(true);
 
             await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula la creación
@@ -126,18 +190,22 @@ export const ProductsPage: React.FC = () => {
             setLoadingModalOpen(false); // Cierra modal que esta a la espera de la creacion del producto
 
         } catch (error) {
-            setModalMessage("Error al crear producto.");
+            setModalMessage("Error creating product.");
             setModalFinallyActionOpen(true); // abre modal de exito o error
         } finally {
 
-            setModalMessage("Producto creado con exitó..."); // crea mensjae para modal 
+            setModalMessage("Successfully created product..."); // crea mensjae para modal 
             setModalFinallyActionOpen(true); // abre modal de exito o error
         }
     };
 
-    // if (error) {
-    //     return <div>Error: {error}</div>;
-    // }
+    if (isLoading) {
+        return <IsLoading message="Loading products..." />
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className="fade-in">
@@ -149,6 +217,8 @@ export const ProductsPage: React.FC = () => {
                 onEdit={handleEditProduct}
                 onDelete={handleDeleteProduct}
                 onAdd={handleAddProduct}
+                onCheckBox={sortProductsByCategory}
+                onCheckBoxStock={sortProductsByStock}
             />
 
             {/* Modal para editar o agregar productos */}
@@ -184,7 +254,7 @@ export const ProductsPage: React.FC = () => {
                     setConfirmDeleteModalOpen(false);
                     setSelectedProduct(null);
                 }}
-                message={`¿Está seguro de que desea eliminar el producto "${selectedProduct?.name}"?`}
+                message={`¿Are you sure you want to delete the product? "${selectedProduct?.name}"?`}
                 loading={false}
                 onConfirmAction={confirmDelete}
             />
@@ -193,7 +263,7 @@ export const ProductsPage: React.FC = () => {
             <CustomModal
                 open={confirmCreateModalOpen}
                 onClose={() => setConfirmCreateModalOpen(false)}
-                message="¿Desea crear este nuevo producto?"
+                message="¿You want to create this new product?"
                 loading={false}
                 onConfirmAction={handleCreateProduct}
             />
@@ -202,10 +272,11 @@ export const ProductsPage: React.FC = () => {
             <CustomModal
                 open={confirmUpdateModalOpen}
                 onClose={() => setConfirmUpdateModalOpen(false)}
-                message="¿Desea actualizar este producto?"
+                message="¿You want to update this product?"
                 loading={false}
                 onConfirmAction={handleUpdateProduct}
             />
         </div>
+
     );
 };

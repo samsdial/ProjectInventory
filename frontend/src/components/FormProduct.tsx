@@ -87,7 +87,7 @@ export const FormProduct: React.FC<FormProductProps> = ({ onSubmit, productToEdi
                 label="Categoría"
                 variant="outlined"
                 name="category"
-                value={productData.category}
+                value={productData.category_id.name}
                 onChange={handleChange}
                 required
             >
