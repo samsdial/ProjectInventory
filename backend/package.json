@@ -2,21 +2,47 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "app.ts",
   "dependencies": {
-    "express": "^4.18.2"
+    "@nivo/line": "^0.87.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.13",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^22.7.5",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "scripts": {
+    "docker:build": "docker build -t backend .",
+    "docker:run": "docker run -p 3000:3000 backend",
+    "docker:dev": "docker run -p 3000:3000 -v $(pwd):/app backend",
+    "fix": "npx prettier --write .",
+    "build": "tsc",
+    "start": "node dist/app.js",
     "start:dev": "npx nodemon",
-    "start": "node app.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed": "npx ts-node src/seeders/index.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

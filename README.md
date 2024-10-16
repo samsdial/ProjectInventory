@@ -1,5 +1,11 @@
 # Project Requirements: Inventory Management System for an Engineering Company
 
+## Datos del proyecto
+
+## node v
+
+v20.10.0
+
 ## Team
 
 ### Backend

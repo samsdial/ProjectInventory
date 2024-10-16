@@ -1,6 +1,13 @@
 # React + TypeScript + Vite
+# redux-toolkit npm install @reduxjs/toolkit react-redux
+# react-router-dom v6 npm install react-router@6 react-router-dom@6
+# npm install lightweight-charts
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Rama MAIN front:
+
+[/frontend](https://github.com/samsdial/ProjectInventory/tree/FrontEnd/frontend)
+
+## Team
 
 Currently, two official plugins are available:
 
