@@ -1,13 +1,17 @@
 // import { Product } from "../models/Product";
 import { Request, Response } from "express";
 import { Product } from "../models/Product";
+import { createResponse } from "../interfaces";
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find();
-    res.status(200).json(products);
+    const products = await Product.find()
+    .populate("category_id", "name")
+    .populate("warehouse_id");
+    console.log(products)
+    res.status(200).json(createResponse(products, "Products retrieved succesfully", true));
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving products", error });
+    res.status(500).json(createResponse(null, "Error retrieving products", false));
   }
 };
 

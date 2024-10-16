@@ -59,13 +59,13 @@ export const TableApp: React.FC<TableAppProps> = ({
                     {rowData.map((row, rowIndex) => (
                         <TableRow key={row.id} sx={{ backgroundColor: rowIndex % 2 === 0 ? "#ffff" : "#f9fafb", "&:hover": { backgroundColor: "#f3f4f6" } }}>
                             <TableCell>{row.id}</TableCell>
-                            <TableCell>
-                                <img src={row.imageUrl} alt={row.name} style={{ maxWidth: "50px", maxHeight: "50px" }} />
-                            </TableCell>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.description}</TableCell>
-                            <TableCell>{row.stock}</TableCell>
-                            <TableCell>{row.category}</TableCell>
+                            <TableCell>{row.stock_current}</TableCell>
+                            <TableCell>{row.category_id.name}</TableCell>
+                            <TableCell>
+                                <img src={row.image} alt={row.name} style={{ maxWidth: "50px", maxHeight: "50px" }} />
+                            </TableCell>
                             {actions && (
                                 <TableCell>
                                     <Button variant="contained" color="primary" onClick={() => onEdit && onEdit(row)}>

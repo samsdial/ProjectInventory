@@ -50,10 +50,10 @@ export const TableStock: React.FC<TableAppProps> = ({
                         <TableRow key={row.id} sx={{ backgroundColor: rowIndex % 2 === 0 ? "#ffff" : "#f9fafb", "&:hover": { backgroundColor: "#f3f4f6" } }}>
                             <TableCell>{row.id}</TableCell>
                             <TableCell>
-                                <img src={row.imageUrl} alt={row.name} style={{ maxWidth: "50px", maxHeight: "50px" }} />
+                                <img src={row.image} alt={row.name} style={{ maxWidth: "50px", maxHeight: "50px" }} />
                             </TableCell>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.stock}</TableCell>
+                            <TableCell>{row.stock_current}</TableCell>
                             {actions && (
                                 <TableCell>
                                     <Button variant="contained" color="primary" onClick={() => onEdit && onEdit(row)}>

@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors';
 
 import { connectDB } from "./src/db";
 import authRoutes from "./src/routes/authentication";
@@ -8,6 +9,8 @@ import authMiddleware from "./src/middlewares/authenticationMiddleware";
 
 export const app = express();
 app.use(express.json());
+app.use(cors());
+
 connectDB();
 
 app.use("/auth", authRoutes);

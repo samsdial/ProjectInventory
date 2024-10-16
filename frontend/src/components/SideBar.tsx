@@ -46,7 +46,6 @@ export const SideBar: React.FC<SideBarProps> = ({ items }) => {
                 width: "100%",
               }}
             >
-              <img src="" alt="logo" style={{ height: "40px" }} />
               <Typography variant="h6" component="div">
                 Inventory
               </Typography>

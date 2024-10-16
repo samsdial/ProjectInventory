@@ -4,7 +4,7 @@ import { createResponse } from "../interfaces";
 
 export const chartgenController = {
   getTransactionHistory: async (req: Request, res: Response): Promise<void> => {
-    const { initial_date, end_date, product } = req.body;
+    const { initial_date, end_date, product } = req.query;
 
     try {
       if (!initial_date || !end_date) {
@@ -12,8 +12,8 @@ export const chartgenController = {
         return;
       }
 
-      const startDate = new Date(initial_date);
-      const endDate = new Date(end_date);
+      const startDate = new Date(initial_date as string);
+      const endDate = new Date(end_date as string);
 
       const query: any = {
         create_at: { $gte: startDate, $lte: endDate },

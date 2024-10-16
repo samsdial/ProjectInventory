@@ -16,9 +16,14 @@ export const FormProduct: React.FC<FormProductProps> = ({ onSubmit, productToEdi
         id: '',
         name: '',
         description: '',
-        stock: 0,
-        category: '',
-        imageUrl: '',
+        stock_current: 0,
+        category_id: { name : '', _id: ''},
+        image: '',
+        warehouse_id: { name: ''},
+        brand_id: '', 
+        createdAt: '', 
+        quantity: 0, 
+        stock_min: '',
     });
 
     useEffect(() => {
@@ -31,7 +36,7 @@ export const FormProduct: React.FC<FormProductProps> = ({ onSubmit, productToEdi
         const { name, value } = e.target;
         setProductData({
             ...productData,
-            [name]: name === 'stock' ? Number(value) : value,
+            [name]: name === 'stock_current' ? Number(value) : value,
         });
     };
 
@@ -71,7 +76,7 @@ export const FormProduct: React.FC<FormProductProps> = ({ onSubmit, productToEdi
                 variant="outlined"
                 name="stock"
                 type="number"
-                value={productData.stock}
+                value={productData.stock_current}
                 onChange={handleChange}
                 required
             />
@@ -98,7 +103,7 @@ export const FormProduct: React.FC<FormProductProps> = ({ onSubmit, productToEdi
                 label="URL de la Imagen"
                 variant="outlined"
                 name="imageUrl"
-                value={productData.imageUrl}
+                value={productData.image}
                 onChange={handleChange}
             />
             <Box sx={{ mt: 2 }}>

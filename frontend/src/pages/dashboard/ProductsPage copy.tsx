@@ -129,7 +129,7 @@ export const ProductsPage: React.FC = () => {
             />
 
             {/* Modal para editar o agregar productos */}
-            <ModalForms open={openModalForm} onClose={() => setOpenModalForm(false)} title={selectedProduct ? "Editar Producto" : "Crear Producto"}>
+            <ModalForms open={openModalForm} onClose={() => setOpenModalForm(false)} title={selectedProduct ? "Update Product" : "Create Product"}>
                 <FormProduct onSubmit={() => setConfirmCreateModalOpen(true)} />
             </ModalForms>
 

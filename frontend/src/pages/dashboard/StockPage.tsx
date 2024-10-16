@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { TableApp } from "../../components/TableApp";
 import { IProduct } from "../../interfaces/product";
 import { getProducts } from "../../api/products/getProducts";
 import { TableStock } from "../../components/TableStock";
@@ -7,9 +6,9 @@ import { CustomModal } from "../../components/CustomModal";
 
 const columnTitles = [
     "id",
-    "name",
-    "stock",
-    "imgurl",
+    "Name",
+    "Stock",
+    "Image",
 ];
 
 export const StockPage: React.FC = () => {
@@ -58,7 +57,7 @@ export const StockPage: React.FC = () => {
             await new Promise((resolve) => setTimeout(resolve, 2000));
             setRowData((prev) =>
                 prev.map((p) =>
-                    p.id === selectedProduct?.id ? { ...p, stock: p.stock + 1 } : p
+                    p.id === selectedProduct?.id ? { ...p, stock: p.stock_current + 1 } : p
                 )
             );
             setModalMessage("Stock aumentado con éxito.");
@@ -76,7 +75,7 @@ export const StockPage: React.FC = () => {
             await new Promise((resolve) => setTimeout(resolve, 2000));
             setRowData((prev) =>
                 prev.map((p) =>
-                    p.id === selectedProduct?.id ? { ...p, stock: Math.max(0, p.stock - 1) } : p
+                    p.id === selectedProduct?.id ? { ...p, stock: Math.max(0, p.stock_current - 1) } : p
                 )
             );
             setModalMessage("Stock disminuido con éxito.");
