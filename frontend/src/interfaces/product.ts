@@ -21,3 +21,23 @@ export interface IProduct {
   stock_min: string;
   warehouse_id: { name: string};
 }
+
+export interface IGetTransactionResponse {
+    error: IGetProductError | null;
+    data: ITransaction[] | null;
+}
+
+export interface ITransaction {
+    id: string;
+    product_id: {
+        name: string;
+    },
+    user_id: {
+        name: string
+    },
+    create_at: string;
+    quantity_moved: number;
+    movement_type: string;
+    description?: string;
+  }
+  

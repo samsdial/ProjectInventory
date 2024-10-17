@@ -1,6 +1,6 @@
-// import { Product } from "../models/Product";
 import { Request, Response } from "express";
 import { Product } from "../models/Product";
+import { Transaction } from "../models/Transaction";
 import { createResponse } from "../interfaces";
 
 export const getAllProducts = async (req: Request, res: Response) => {
@@ -73,5 +73,16 @@ export const deleteProduct = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting product", error });
+  }
+};
+
+export const getAllTransactions= async (req: Request, res: Response) => {
+  try {
+    const transactions = await Transaction.find()
+    .populate('product_id', 'name')
+    .populate('user_id', 'name')
+    res.status(200).json(createResponse(transactions, "Transactions retrieved succesfully", true));
+  } catch (error) {
+    res.status(500).json(createResponse(null, "Error retrieving transactions", false));
   }
 };
